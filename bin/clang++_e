@@ -1,0 +1,13 @@
+#!/bin/bash
+
+filename=$1
+
+extension="${filename##*.}"
+if [ "$extension" != "cpp" ]; then
+    echo "Error: File '$filename' does not have a .cpp extension."
+    exit 1
+fi
+
+filenameWithoutEx=$(basename "$filename" .cpp)
+clang++ $filename -o $filenameWithoutEx
+./"$filenameWithoutEx"

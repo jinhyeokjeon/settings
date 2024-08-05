@@ -1,0 +1,13 @@
+#!/bin/bash
+
+filename=$1
+
+extension="${filename##*.}"
+if [ "$extension" != "c" ]; then
+    echo "Error: File '$filename' does not have a .c extension."
+    exit 1
+fi
+
+filenameWithoutEx=$(basename "$filename" .c)
+clang $filename -o $filenameWithoutEx
+./"$filenameWithoutEx"
