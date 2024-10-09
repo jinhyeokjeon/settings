@@ -1,0 +1,25 @@
+#!/bin/bash
+
+filename="$1"
+
+if [ -z "$filename" ]; then
+    echo "usage: $(basename $0) [*.c or *.cpp]"
+    exit 1
+fi
+
+extension="${filename##*.}"
+
+if [ "$extension" != "c" ] && [ "$extension" != "cpp" ]; then
+    echo "Error: File \"$filename\" does not have \".c\" or \".cpp\" extension."
+    exit 1
+fi
+
+filenameWithoutEx=$(basename "$filename" ".$extension")
+
+if [ "$extension" == "cpp" ]; then
+    clang++ $filename -o $filenameWithoutEx -std=c++20
+elif [ "$extension" == "c" ]; then
+    clang $filename -o $filenameWithoutEx -std=c11
+fi
+
+./"$filenameWithoutEx"
